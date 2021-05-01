@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 });
 
 // MongoDB connection and ExpressJS definitions 
-MongoClient.connect(uri, { useUnifiedTopology: true })
+MongoClient.connect('mongodb://localhost:27017/smartscreen', { useUnifiedTopology: true })
     .then(client => {
         app.use(bodyParser.urlencoded({ extended: true }))
         app.use(bodyParser.json())
@@ -62,6 +62,10 @@ MongoClient.connect(uri, { useUnifiedTopology: true })
                                     image_path: image.image_path
                                 }
                             )
+                        })
+                        .catch(error => {
+                            console.error(error)
+                            res.send({})
                         })
                 })
                 .catch(error => {

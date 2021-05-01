@@ -4,70 +4,110 @@
 <head>
     <meta charset="UTF-8" />
     <title>Smart Screen Web App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
 </head>
 
-<body>
+<body class="container theme-showcase" style="font-family: 'Roboto', sans-serif;">
     <h1>Smart Screen App</h1>
 
-    <h2>Screens</h2>
+    <div class="page-header">
+        <h2>Screens</h2>
+    </div>
     <form action="/screens" method="POST">
-        <input type="text" placeholder="Name" name="name" />
-        <input type="text" placeholder="Device ID" name="device_id" />
-        <button type="submit">Submit</button>
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="Device ID" name="device_id" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="Name" name="name" />
+        </div>
+        <button class="btn btn-default" type="submit">Submit</button>
     </form>
-    <ul class="screens">
-        <!-- Loop through screens -->
-        <% for(var i=0; i < screens.length; i++) {%>
-            <li class="screen">
-                <span>
-                    <%= screens[i]._id %>
-                </span>:
-                <!-- Output name from the iterated screen object -->
-                <span>
-                    <%= screens[i].name %>
-                </span>:
-                <!-- Output device_id from the iterated screen object -->
-                <span>
-                    <%= screens[i].device_id %>
-                </span>
-                <a data-id="<%= screens[i]._id %>" href="#" onclick="deleteScreen(this);">
-                    Delete
-                </a>
-            </li>
-            <% } %>
-    </ul>
-    <h2>Images</h2>
-    <form action="/images" method="POST" enctype="multipart/form-data">
-        <label>Screen</label>
-        <select name="screen_id" class="ui dropdown">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Device ID</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through screens -->
             <% for(var i=0; i < screens.length; i++) {%>
-                <option name="device_id" value="<%= screens[i]._id %>">
-                    <%= screens[i].name %> / <%= screens[i].device_id %>
-                </option>
+                <tr>
+                    <th scope="row">
+                        <%= screens[i]._id %>
+                    </th>
+                    <td>
+                        <%= screens[i].name %>
+                    </td>
+                    <td>
+                        <%= screens[i].device_id %>
+                    </td>
+                    <td>
+                        <a data-id="<%= screens[i]._id %>" href="#" onclick="deleteScreen(this);">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
                 <% } %>
-        </select>
-        <br><label>Select image to show on screen:</label>
-        <input type="file" name="picture" />
-        <button type="submit">Submit</button>
+        </tbody>
+    </table>
+    <div class="page-header">
+        <h2>Images</h2>
+    </div>
+    <form action="/images" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="screen_id">Screen</label>
+            <select id="screen_id" name="screen_id" class="form-control">
+                <% for(var i=0; i < screens.length; i++) {%>
+                    <option name="device_id" value="<%= screens[i]._id %>">
+                        <%= screens[i].name %> / <%= screens[i].device_id %>
+                    </option>
+                    <% } %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="picture">Select image to show on screen:</label>
+            <input id="picture" type="file" class="form-control-file" name="picture" />
+        </div>
+        <button class="btn btn-default" type="submit">Submit</button>
     </form>
-    <ul class="images">
-        <!-- Loop through images -->
-        <% for(var i=0; i < images.length; i++) {%>
-            <li class="image">
-                <!-- Output name from the iterated image object -->
-                <span>
-                    <%= images[i].screen_id %>
-                </span>:
-                <!-- Output device_id from the iterated image object -->
-                <span>
-                    <%= images[i].image_path %>
-                </span>
-                <a data-id="<%= images[i]._id %>" href="#" onclick="deleteImage(this);">
-                    Delete
-                </a>
-            </li>
-            <% } %>
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Screen ID</th>
+                <th scope="col">Image Path</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through screens -->
+            <% for(var i=0; i < images.length; i++) {%>
+                <tr>
+                    <th scope="row">
+                        <%= images[i].screen_id %>
+                    </th>
+                    <td>
+                        <a href="<%= images[i].image_path %>">
+                            <%= images[i].image_path %>
+                        </a>
+                    </td>
+                    <td>
+                        <a data-id="<%= images[i]._id %>" href="#" onclick="deleteImage(this);">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
     <script src="/js/main.js"></script>
 </body>
 
