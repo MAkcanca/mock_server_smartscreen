@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Smart Screen Web App</title>
+</head>
+
+<body>
+    <h1>Smart Screen App</h1>
+
+    <h2>Screens</h2>
+    <form action="/screens" method="POST">
+        <input type="text" placeholder="Name" name="name" />
+        <input type="text" placeholder="Device ID" name="device_id" />
+        <button type="submit">Submit</button>
+    </form>
+    <ul class="screens">
+        <!-- Loop through screens -->
+        <% for(var i=0; i < screens.length; i++) {%>
+            <li class="screen">
+                <span>
+                    <%= screens[i]._id %>
+                </span>:
+                <!-- Output name from the iterated screen object -->
+                <span>
+                    <%= screens[i].name %>
+                </span>:
+                <!-- Output device_id from the iterated screen object -->
+                <span>
+                    <%= screens[i].device_id %>
+                </span>
+                <a data-id="<%= screens[i]._id %>" href="#" onclick="deleteScreen(this);">
+                    Delete
+                </a>
+            </li>
+            <% } %>
+    </ul>
+    <h2>Images</h2>
+    <form action="/images" method="POST" enctype="multipart/form-data">
+        <label>Screen</label>
+        <select name="screen_id" class="ui dropdown">
+            <% for(var i=0; i < screens.length; i++) {%>
+                <option name="device_id" value="<%= screens[i]._id %>">
+                    <%= screens[i].name %> / <%= screens[i].device_id %>
+                </option>
+                <% } %>
+        </select>
+        <br><label>Select image to show on screen:</label>
+        <input type="file" name="picture" />
+        <button type="submit">Submit</button>
+    </form>
+    <ul class="images">
+        <!-- Loop through images -->
+        <% for(var i=0; i < images.length; i++) {%>
+            <li class="image">
+                <!-- Output name from the iterated image object -->
+                <span>
+                    <%= images[i].screen_id %>
+                </span>:
+                <!-- Output device_id from the iterated image object -->
+                <span>
+                    <%= images[i].image_path %>
+                </span>
+                <a data-id="<%= images[i]._id %>" href="#" onclick="deleteImage(this);">
+                    Delete
+                </a>
+            </li>
+            <% } %>
+    </ul>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>
