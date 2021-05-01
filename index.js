@@ -55,6 +55,10 @@ MongoClient.connect(uri, { useUnifiedTopology: true })
         app.get('/get_image', function (req, res) {
             screensCollection.findOne({ device_id: req.query.device_id })
                 .then(screen => {
+                    if (!screen) {
+                        res.send({})
+                        return
+                    }
                     imagesCollection.findOne({ screen_id: screen._id.toString() })
                         .then(image => {
                             res.json(
