@@ -10,7 +10,7 @@ const helpers = require('./helpers')
 
 const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/smartscreen';
 const app = express();
-const port = 8080;
+const port = 80;
 
 // Storage for images
 const storage = multer.diskStorage({
