@@ -10,7 +10,7 @@ const helpers = require('./helpers')
 
 const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/smartscreen';
 const app = express();
-const port = 80;
+const port = process.env.PORT || 8080;
 
 // Storage for images
 const storage = multer.diskStorage({
@@ -135,7 +135,7 @@ MongoClient.connect(uri, { useUnifiedTopology: true })
                 .catch(error => console.error(error))
         })
 
-        app.listen(port, '127.0.0.1');
+        app.listen(port);
         console.log('Server started');
 
     })
