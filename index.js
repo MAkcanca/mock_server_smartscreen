@@ -135,7 +135,7 @@ MongoClient.connect(uri, { useUnifiedTopology: true })
                 .catch(error => console.error(error))
         })
 
-        app.listen(port);
+        app.listen(port, '127.0.0.1');
         console.log('Server started');
 
     })
