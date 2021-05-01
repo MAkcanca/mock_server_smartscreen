@@ -8,7 +8,7 @@ const cors = require('cors')
 const helpers = require('./helpers')
 
 
-
+const uri = process.env.MONGODB_URI;
 const app = express();
 const port = 8080;
 
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 });
 
 // MongoDB connection and ExpressJS definitions 
-MongoClient.connect('mongodb://localhost:27017/smartscreen', { useUnifiedTopology: true })
+MongoClient.connect(uri, { useUnifiedTopology: true })
     .then(client => {
         app.use(bodyParser.urlencoded({ extended: true }))
         app.use(bodyParser.json())
